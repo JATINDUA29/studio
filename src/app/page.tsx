@@ -2,9 +2,7 @@ import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { CheckCircle2, HeartPulse, MessageCircle, Stethoscope } from 'lucide-react';
 import Link from 'next/link';
-import Image from 'next/image';
 import { Logo } from '@/components/icons/Logo';
-import { PlaceHolderImages } from '@/lib/placeholder-images';
 
 const features = [
   {
@@ -30,7 +28,6 @@ const features = [
 ];
 
 export default function Home() {
-  const heroImage = PlaceHolderImages.find(p => p.id === 'doctor-1');
   return (
     <div className="flex flex-col min-h-screen">
       <header className="container mx-auto px-4 sm:px-6 lg:px-8 py-4 flex justify-between items-center">
@@ -50,7 +47,7 @@ export default function Home() {
 
       <main className="flex-grow">
         <section className="container mx-auto px-4 sm:px-6 lg:px-8 py-20 md:py-32">
-          <div className="grid md:grid-cols-2 gap-12 items-center">
+          <div className="grid md:grid-cols-1 gap-12 items-center">
             <div className="space-y-6 text-center md:text-left">
               <h1 className="text-4xl md:text-6xl font-bold font-headline tracking-tighter text-foreground">
                 Your Personal AI Health Companion
@@ -67,20 +64,6 @@ export default function Home() {
                   <Link href="/appointments">Book an Appointment</Link>
                 </Button>
               </div>
-            </div>
-            <div className="relative w-full max-w-lg mx-auto aspect-[4/3]">
-              {heroImage && (
-                <Link href={heroImage.imageUrl} target="_blank" rel="noopener noreferrer">
-                  <Image
-                    src={heroImage.imageUrl}
-                    alt={heroImage.description}
-                    width={1200}
-                    height={800}
-                    className="object-cover rounded-2xl shadow-2xl transition-all duration-300 hover:scale-105 hover:shadow-primary/30"
-                    data-ai-hint={heroImage.imageHint}
-                  />
-                </Link>
-              )}
             </div>
           </div>
         </section>

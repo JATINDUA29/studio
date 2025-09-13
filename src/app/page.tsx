@@ -30,7 +30,7 @@ const features = [
 ];
 
 export default function Home() {
-  const heroImage = PlaceHolderImages.find(p => p.id === 'doctor-2');
+  const heroImage = PlaceHolderImages.find(p => p.id === 'doctor-1');
   return (
     <div className="flex flex-col min-h-screen">
       <header className="container mx-auto px-4 sm:px-6 lg:px-8 py-4 flex justify-between items-center">

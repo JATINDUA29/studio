@@ -39,6 +39,17 @@ async function checkSymptoms(
   }
 }
 
+const predefinedSymptoms = [
+    'Headache',
+    'Fever',
+    'Cough',
+    'Sore throat',
+    'Runny nose',
+    'Body ache',
+    'Nausea',
+    'Fatigue',
+];
+
 export function SymptomChecker() {
   const [state, formAction] = useFormState(checkSymptoms, { data: null, error: null });
   const [isPending, setIsPending] = useState(false);
@@ -64,6 +75,12 @@ export function SymptomChecker() {
       setIsPending(false);
     }
   });
+  
+  const handleSymptomClick = (symptom: string) => {
+    const currentSymptoms = form.getValues('symptoms');
+    const newSymptoms = currentSymptoms ? `${currentSymptoms}, ${symptom}` : symptom;
+    form.setValue('symptoms', newSymptoms, { shouldValidate: true });
+  };
 
 
   const getSeverityVariant = (severity: 'low' | 'medium' | 'high') => {
@@ -94,6 +111,16 @@ export function SymptomChecker() {
               </FormItem>
             )}
           />
+          <div className="space-y-2">
+            <p className="text-sm font-medium text-muted-foreground">Or select common symptoms:</p>
+            <div className="flex flex-wrap gap-2">
+                {predefinedSymptoms.map(symptom => (
+                    <Button key={symptom} type="button" variant="outline" size="sm" onClick={() => handleSymptomClick(symptom)}>
+                        {symptom}
+                    </Button>
+                ))}
+            </div>
+          </div>
           <Button type="submit" disabled={isPending}>
             {isPending && <Loader2 className="mr-2 h-4 w-4 animate-spin" />}
             Analyze Symptoms

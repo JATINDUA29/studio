@@ -30,7 +30,7 @@ const features = [
 ];
 
 export default function Home() {
-  const heroImage = PlaceHolderImages.find(p => p.id === 'indian-doctor-hero');
+  const heroImage = PlaceHolderImages.find(p => p.id === 'doctor-2');
   return (
     <div className="flex flex-col min-h-screen">
       <header className="container mx-auto px-4 sm:px-6 lg:px-8 py-4 flex justify-between items-center">
@@ -74,7 +74,8 @@ export default function Home() {
                   <Image
                     src={heroImage.imageUrl}
                     alt={heroImage.description}
-                    fill
+                    width={1200}
+                    height={800}
                     className="object-cover rounded-2xl shadow-2xl transition-transform duration-300 hover:scale-105"
                     data-ai-hint={heroImage.imageHint}
                   />

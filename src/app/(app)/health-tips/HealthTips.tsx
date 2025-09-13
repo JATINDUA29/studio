@@ -1,6 +1,6 @@
 'use client';
 
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { getPatientFriendlyHealthTips, PatientFriendlyHealthTipsOutput } from '@/ai/flows/patient-friendly-health-tips';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
@@ -27,7 +27,7 @@ export function HealthTips() {
   };
   
   // Fetch tips on initial component load
-  useState(() => {
+  useEffect(() => {
     handleGetTips();
   }, []);
 

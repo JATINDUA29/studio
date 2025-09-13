@@ -1,6 +1,6 @@
 import { config } from 'dotenv';
 config();
 
-import '@/ai/flows/patient-friendly-health-tips.ts';
-import '@/ai/flows/ai-symptom-checker.ts';
-import '@/ai/flows/prescription-validation.ts';
+import './flows/patient-friendly-health-tips.js';
+import './flows/ai-symptom-checker.js';
+import './flows/prescription-validation.js';

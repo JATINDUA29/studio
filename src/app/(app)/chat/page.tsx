@@ -35,7 +35,7 @@ export default function ChatPage() {
             type: 'text',
             avatar: 'doctor-2'
         };
-        setMessages([...messages, newMsg]);
+        setMessages(prev => [...prev, newMsg]);
         setNewMessage("");
 
         // Simulate doctor's reply

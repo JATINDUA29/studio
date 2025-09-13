@@ -125,12 +125,22 @@ export function SymptomChecker() {
     if (fileInput) {
       fileInput.value = '';
     }
-  }
+  };
   
   const handleSymptomClick = (symptom: string) => {
     const currentSymptoms = form.getValues('symptoms');
     const newSymptoms = currentSymptoms ? `${currentSymptoms}, ${symptom}` : symptom;
     form.setValue('symptoms', newSymptoms, { shouldValidate: true });
+  };
+  
+  const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
+    event.preventDefault();
+    const formData = new FormData(event.currentTarget);
+    const imageFile = form.getValues('symptomImage');
+    if (imageFile) {
+      formData.append('symptomImage', imageFile);
+    }
+    formAction(formData);
   };
 
   const getSeverityVariant = (severity: 'low' | 'medium' | 'high') => {
@@ -144,7 +154,7 @@ export function SymptomChecker() {
   return (
     <div className="space-y-6">
       <Form {...form}>
-        <form action={formAction} className="space-y-6">
+        <form onSubmit={handleSubmit} className="space-y-6">
            <FormField
               control={form.control}
               name="patientAge"
@@ -210,7 +220,7 @@ export function SymptomChecker() {
                               <div className="space-y-2">
                                   <ImageIcon className="mx-auto h-12 w-12 text-muted-foreground" />
                                   <p className="text-sm text-muted-foreground">Drag & drop or click to upload an image of your symptom.</p>
-                                  <Input id="symptom-image-input" name="symptomImage" type="file" className="absolute inset-0 w-full h-full opacity-0 cursor-pointer" onChange={handleImageChange} accept="image/*"/>
+                                  <Input id="symptom-image-input" type="file" className="absolute inset-0 w-full h-full opacity-0 cursor-pointer" onChange={handleImageChange} accept="image/*"/>
                               </div>
                           )}
                           </div>

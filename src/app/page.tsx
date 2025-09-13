@@ -30,7 +30,7 @@ const features = [
 ];
 
 export default function Home() {
-  const heroImage = PlaceHolderImages.find(p => p.id === 'doctor-1');
+  const heroImage = PlaceHolderImages.find(p => p.id === 'hero-image-1');
 
   return (
     <div className="flex flex-col min-h-screen">

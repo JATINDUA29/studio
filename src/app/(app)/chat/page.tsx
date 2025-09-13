@@ -42,7 +42,7 @@ export default function ChatPage() {
         setTimeout(() => {
             const replyMsg: Message = {
                 id: messages.length + 2,
-                text: "Thank you for the information. Let me review this.",
+                text: "Thank you for the information. Let me review what you've sent.",
                 sender: 'doctor',
                 type: 'text',
                 avatar: 'doctor-1'

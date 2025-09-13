@@ -73,7 +73,7 @@ const aiSymptomCheckerPrompt = ai.definePrompt({
   {{/if}}
 
   Based on the symptoms, provide a list of possible conditions with severity levels (low, medium, high) and confidence scores (0 to 1). 
-  For each condition, suggest a suitable over-the-counter medication. 
+  For each condition, suggest a suitable over-the-counter medication commonly available in the Indian context.
   When suggesting medication, you MUST consider the patient's age and allergies to avoid harmful recommendations. For example, do not suggest Aspirin to children. If there are no safe medications to suggest, state that.
 
   Prioritize the list based on the likelihood and severity of the conditions.

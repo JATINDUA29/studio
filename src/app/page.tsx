@@ -30,7 +30,6 @@ const features = [
 ];
 
 export default function Home() {
-  const heroImage = PlaceHolderImages.find(p => p.id === 'hero-image-1');
 
   return (
     <div className="flex flex-col min-h-screen">
@@ -51,16 +50,16 @@ export default function Home() {
 
       <main className="flex-grow">
         <section className="container mx-auto px-4 sm:px-6 lg:px-8 py-20 md:py-32">
-          <div className="grid md:grid-cols-2 gap-12 items-center">
-            <div className="space-y-6 text-center md:text-left">
+          <div className="grid md:grid-cols-1 gap-12 items-center">
+            <div className="space-y-6 text-center">
               <h1 className="text-4xl md:text-6xl font-bold font-headline tracking-tighter text-foreground">
                 Your Personal AI Health Companion
               </h1>
-              <p className="text-lg text-muted-foreground max-w-xl mx-auto md:mx-0">
+              <p className="text-lg text-muted-foreground max-w-xl mx-auto">
                 Arogya AI provides intelligent symptom analysis, personalized health tips, and seamless
                 doctor consultations. Take control of your health today.
               </p>
-              <div className="flex gap-4 justify-center md:justify-start">
+              <div className="flex gap-4 justify-center">
                 <Button size="lg" asChild>
                   <Link href="/dashboard">Check Symptoms Now</Link>
                 </Button>
@@ -69,18 +68,6 @@ export default function Home() {
                 </Button>
               </div>
             </div>
-             {heroImage && (
-              <div className="relative h-80 w-full md:h-full group">
-                <Image
-                  src={heroImage.imageUrl}
-                  alt={heroImage.description}
-                  data-ai-hint={heroImage.imageHint}
-                  fill
-                  className="rounded-lg object-cover shadow-lg transition-all duration-300 group-hover:shadow-primary/20 group-hover:shadow-2xl"
-                  priority
-                />
-              </div>
-            )}
           </div>
         </section>
 

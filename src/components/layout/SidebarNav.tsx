@@ -19,7 +19,7 @@ import {
   LayoutDashboard,
   LogOut,
   MessageCircle,
-  Stethoscope,
+  Bot,
   User,
 } from 'lucide-react';
 import Link from 'next/link';
@@ -28,7 +28,7 @@ import { PlaceHolderImages } from '@/lib/placeholder-images';
 
 const menuItems = [
   { href: '/dashboard', label: 'Dashboard', icon: LayoutDashboard },
-  { href: '/symptom-checker', label: 'Symptom Checker', icon: Stethoscope },
+  { href: '/symptom-checker', label: 'AI Chatbot', icon: Bot },
   { href: '/health-tips', label: 'Health Tips', icon: HeartPulse },
   { href: '/appointments', label: 'Appointments', icon: Calendar },
   { href: '/chat', label: 'Chat', icon: MessageCircle },

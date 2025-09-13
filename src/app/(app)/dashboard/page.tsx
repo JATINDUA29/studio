@@ -1,7 +1,7 @@
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { appointments } from "@/lib/data";
-import { ArrowRight, Calendar, HeartPulse, Stethoscope } from "lucide-react";
+import { ArrowRight, Calendar, HeartPulse, Bot } from "lucide-react";
 import Link from 'next/link';
 import { format } from "date-fns";
 
@@ -19,14 +19,14 @@ export default function DashboardPage() {
                 <Card className="transform hover:-translate-y-1 transition-transform duration-300">
                     <CardHeader>
                         <CardTitle className="flex items-center gap-2">
-                            <Stethoscope className="text-primary"/>
-                            <span>AI Symptom Checker</span>
+                            <Bot className="text-primary"/>
+                            <span>Arogya AI Chatbot</span>
                         </CardTitle>
                         <CardDescription>Get an instant analysis of your symptoms.</CardDescription>
                     </CardHeader>
                     <CardContent>
                         <Button asChild>
-                            <Link href="/symptom-checker">Start Check <ArrowRight/></Link>
+                            <Link href="/symptom-checker">Start Chat <ArrowRight/></Link>
                         </Button>
                     </CardContent>
                 </Card>

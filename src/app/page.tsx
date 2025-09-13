@@ -3,6 +3,8 @@ import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { CheckCircle2, HeartPulse, MessageCircle, Stethoscope } from 'lucide-react';
 import Link from 'next/link';
 import { Logo } from '@/components/icons/Logo';
+import Image from 'next/image';
+import { PlaceHolderImages } from '@/lib/placeholder-images';
 
 const features = [
   {
@@ -28,6 +30,8 @@ const features = [
 ];
 
 export default function Home() {
+  const heroImage = PlaceHolderImages.find(p => p.id === 'doctor-1');
+
   return (
     <div className="flex flex-col min-h-screen">
       <header className="container mx-auto px-4 sm:px-6 lg:px-8 py-4 flex justify-between items-center">
@@ -47,7 +51,7 @@ export default function Home() {
 
       <main className="flex-grow">
         <section className="container mx-auto px-4 sm:px-6 lg:px-8 py-20 md:py-32">
-          <div className="grid md:grid-cols-1 gap-12 items-center">
+          <div className="grid md:grid-cols-2 gap-12 items-center">
             <div className="space-y-6 text-center md:text-left">
               <h1 className="text-4xl md:text-6xl font-bold font-headline tracking-tighter text-foreground">
                 Your Personal AI Health Companion
@@ -65,6 +69,18 @@ export default function Home() {
                 </Button>
               </div>
             </div>
+             {heroImage && (
+              <div className="relative h-80 w-full md:h-full group">
+                <Image
+                  src={heroImage.imageUrl}
+                  alt={heroImage.description}
+                  data-ai-hint={heroImage.imageHint}
+                  fill
+                  className="rounded-lg object-cover shadow-lg transition-all duration-300 group-hover:shadow-primary/20 group-hover:shadow-2xl"
+                  priority
+                />
+              </div>
+            )}
           </div>
         </section>
 

@@ -1,7 +1,6 @@
 'use client';
 
-import { useState } from 'react';
-import { useFormState } from 'react-dom';
+import { useActionState } from 'react';
 import { useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { z } from 'zod';
@@ -9,7 +8,7 @@ import { aiSymptomChecker, AISymptomCheckerOutput } from '@/ai/flows/ai-symptom-
 import { Button } from '@/components/ui/button';
 import { Textarea } from '@/components/ui/textarea';
 import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from '@/components/ui/form';
-import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
+import { Card, CardContent } from '@/components/ui/card';
 import { Badge } from '@/components/ui/badge';
 import { Progress } from '@/components/ui/progress';
 import { AlertCircle, Loader2 } from 'lucide-react';
@@ -51,8 +50,7 @@ const predefinedSymptoms = [
 ];
 
 export function SymptomChecker() {
-  const [state, formAction] = useFormState(checkSymptoms, { data: null, error: null });
-  const [isPending, setIsPending] = useState(false);
+  const [state, formAction, isPending] = useActionState(checkSymptoms, { data: null, error: null });
 
   const form = useForm<FormValues>({
     resolver: zodResolver(formSchema),
@@ -62,19 +60,10 @@ export function SymptomChecker() {
   });
   
   const onSubmit = (data: FormValues) => {
-    setIsPending(true);
     const formData = new FormData();
     formData.append('symptoms', data.symptoms);
     formAction(formData);
   };
-  
-  // This effect is needed because useFormState does not provide a pending state.
-  // We can determine the pending state has ended when the state object is updated.
-  useState(() => {
-    if(state.data || state.error) {
-      setIsPending(false);
-    }
-  });
   
   const handleSymptomClick = (symptom: string) => {
     const currentSymptoms = form.getValues('symptoms');
@@ -155,25 +144,28 @@ export function SymptomChecker() {
                 This is a preliminary analysis and not a medical diagnosis. Please consult a healthcare professional.
               </AlertDescription>
             </Alert>
-          <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-3">
-            {state.data.conditions.map(c => (
-              <Card key={c.condition}>
-                <CardHeader>
-                  <div className="flex justify-between items-start">
-                    <CardTitle>{c.condition}</CardTitle>
-                    <Badge variant={getSeverityVariant(c.severity)} className="capitalize">{c.severity}</Badge>
-                  </div>
-                </CardHeader>
-                <CardContent>
-                  <div className="space-y-2">
-                    <p className="text-sm text-muted-foreground">Confidence Score</p>
-                    <Progress value={c.confidence * 100} />
-                    <p className="text-right font-mono text-sm">{(c.confidence * 100).toFixed(0)}%</p>
-                  </div>
-                </CardContent>
-              </Card>
-            ))}
-          </div>
+
+          {state.data.conditions.map((item, index) => (
+            <Card key={index}>
+              <CardContent className="pt-6">
+                <div className="flex justify-between items-start">
+                    <div>
+                        <p className="font-semibold">{item.condition}</p>
+                        <Badge variant={getSeverityVariant(item.severity)} className="capitalize mt-1">
+                            {item.severity} Severity
+                        </Badge>
+                    </div>
+                    <div className="text-right">
+                        <p className="font-bold text-lg">{(item.confidence * 100).toFixed(0)}%</p>
+                        <p className="text-sm text-muted-foreground">Confidence</p>
+                    </div>
+                </div>
+                 <div className="mt-4">
+                    <Progress value={item.confidence * 100} />
+                 </div>
+              </CardContent>
+            </Card>
+          ))}
         </div>
       )}
     </div>

@@ -40,7 +40,7 @@ export default function Home() {
         </Link>
         <nav className="flex items-center gap-4">
           <Button variant="ghost" asChild>
-            <Link href="/dashboard">Log In</Link>
+            <Link href="/login">Log In</Link>
           </Button>
           <Button asChild>
             <Link href="/dashboard">Get Started</Link>
@@ -114,8 +114,9 @@ export default function Home() {
       </main>
 
       <footer className="container mx-auto px-4 sm:px-6 lg:px-8 py-6">
-        <div className="text-center text-muted-foreground">
-          &copy; {new Date().getFullYear()} Arogya AI. All Rights Reserved.
+        <div className="flex justify-center items-center text-muted-foreground space-x-4">
+          <span>&copy; {new Date().getFullYear()} Arogya AI. All Rights Reserved.</span>
+          <Link href="/privacy" className="hover:text-primary">Privacy Policy</Link>
         </div>
       </footer>
     </div>

@@ -21,6 +21,7 @@ import {
   MessageCircle,
   Bot,
   User,
+  Shield,
 } from 'lucide-react';
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
@@ -83,6 +84,21 @@ export function SidebarNav() {
               </SidebarMenuItem>
             ))}
           </SidebarMenu>
+           <SidebarSeparator className="my-4" />
+           <SidebarMenu>
+            <SidebarMenuItem>
+                <SidebarMenuButton
+                  asChild
+                  isActive={pathname === '/privacy'}
+                  tooltip="Privacy Policy"
+                >
+                  <Link href="/privacy">
+                    <Shield />
+                    <span>Privacy Policy</span>
+                  </Link>
+                </SidebarMenuButton>
+              </SidebarMenuItem>
+           </SidebarMenu>
 
 
         </SidebarGroupContent>
@@ -105,9 +121,11 @@ export function SidebarNav() {
               </SidebarMenuButton>
             </SidebarMenuItem>
              <SidebarMenuItem>
-                <SidebarMenuButton tooltip="Log Out">
-                    <LogOut/>
-                    <span>Log Out</span>
+                <SidebarMenuButton asChild tooltip="Log Out">
+                    <Link href="/login">
+                      <LogOut/>
+                      <span>Log Out</span>
+                    </Link>
                 </SidebarMenuButton>
             </SidebarMenuItem>
           </SidebarMenu>

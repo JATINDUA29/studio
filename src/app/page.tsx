@@ -69,15 +69,17 @@ export default function Home() {
               </div>
             </div>
             <div className="relative w-full max-w-lg mx-auto aspect-[4/3]">
-              {heroImage && 
-                <Image 
-                  src={heroImage.imageUrl} 
-                  alt={heroImage.description} 
-                  fill
-                  className="object-cover rounded-2xl shadow-2xl"
-                  data-ai-hint={heroImage.imageHint}
-                />
-              }
+              {heroImage && (
+                <Link href={heroImage.imageUrl} target="_blank" rel="noopener noreferrer">
+                  <Image
+                    src={heroImage.imageUrl}
+                    alt={heroImage.description}
+                    fill
+                    className="object-cover rounded-2xl shadow-2xl transition-transform duration-300 hover:scale-105"
+                    data-ai-hint={heroImage.imageHint}
+                  />
+                </Link>
+              )}
             </div>
           </div>
         </section>

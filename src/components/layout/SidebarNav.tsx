@@ -22,12 +22,14 @@ import {
   Bot,
   User,
   Shield,
+  Home,
 } from 'lucide-react';
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
 import { PlaceHolderImages } from '@/lib/placeholder-images';
 
 const menuItems = [
+  { href: '/', label: 'Home', icon: Home },
   { href: '/dashboard', label: 'Dashboard', icon: LayoutDashboard },
   { href: '/symptom-checker', label: 'AI Chatbot', icon: Bot },
   { href: '/health-tips', label: 'Health Tips', icon: HeartPulse },

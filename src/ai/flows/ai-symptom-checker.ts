@@ -18,6 +18,12 @@ const AISymptomCheckerInputSchema = z.object({
   symptoms: z
     .string()
     .describe('A detailed description of the symptoms experienced by the user.'),
+  symptomImage: z
+    .string()
+    .optional()
+    .describe(
+      "A photo of the symptom, as a data URI that must include a MIME type and use Base64 encoding. Expected format: 'data:<mimetype>;base64,<encoded_data>'."
+    ),
 });
 
 export type AISymptomCheckerInput = z.infer<typeof AISymptomCheckerInputSchema>;
@@ -52,6 +58,11 @@ const aiSymptomCheckerPrompt = ai.definePrompt({
 
   Analyze the following symptoms:
   {{symptoms}}
+
+  {{#if symptomImage}}
+  Also analyze the following image of the symptom:
+  {{media url=symptomImage}}
+  {{/if}}
 
   Provide a list of possible conditions with severity levels (low, medium, high) and confidence scores (0 to 1). Prioritize the list based on the likelihood and severity of the conditions.
 

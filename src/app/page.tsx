@@ -76,7 +76,7 @@ export default function Home() {
                     alt={heroImage.description}
                     width={1200}
                     height={800}
-                    className="object-cover rounded-2xl shadow-2xl transition-transform duration-300 hover:scale-105"
+                    className="object-cover rounded-2xl shadow-2xl transition-all duration-300 hover:scale-105 hover:shadow-primary/30"
                     data-ai-hint={heroImage.imageHint}
                   />
                 </Link>

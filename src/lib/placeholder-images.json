@@ -10,25 +10,25 @@
     {
       "id": "doctor-1",
       "description": "Avatar for Dr. Anjali Sharma",
-      "imageUrl": "https://images.unsplash.com/photo-1582750421715-21d74b344738?q=80&w=200&h=200&fit=crop",
+      "imageUrl": "https://images.unsplash.com/photo-1623914849646-9b57849c7162?q=80&w=200&h=200&fit=crop",
       "imageHint": "woman doctor"
     },
     {
       "id": "doctor-2",
       "description": "Avatar for Dr. Raj Patel",
-      "imageUrl": "https://images.unsplash.com/photo-1622253692010-333f2da6031d?q=80&w=200&h=200&fit=crop",
+      "imageUrl": "https://images.unsplash.com/photo-1612349317150-e413f6a5b16e?q=80&w=200&h=200&fit=crop",
       "imageHint": "man doctor"
     },
     {
       "id": "doctor-3",
       "description": "Avatar for Dr. Priya Singh",
-      "imageUrl": "https://assets.lybrate.com/f_auto,c_limit,w_384,q_auto/img/documents/doctor/dp/e343e26bbca83b72fd9d8d2bc64cddc6/Pediatrics-AshokChakravarty-Delhi-91be3c.jpeg",
+      "imageUrl": "https://images.unsplash.com/photo-1594824476967-48c8b964273f?q=80&w=200&h=200&fit=crop",
       "imageHint": "female doctor"
     },
     {
       "id": "doctor-4",
       "description": "Avatar for Dr. Sameer Khan",
-      "imageUrl": "https://images.unsplash.com/photo-1651008373230-6143b448a356?q=80&w=200&h=200&fit=crop",
+      "imageUrl": "https://images.unsplash.com/photo-1632333529329-8571f4b93192?q=80&w=200&h=200&fit=crop",
       "imageHint": "male doctor"
     }
   ]

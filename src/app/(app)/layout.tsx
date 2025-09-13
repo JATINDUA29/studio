@@ -62,12 +62,12 @@ export default function AppLayout({ children }: { children: React.ReactNode }) {
     <SidebarProvider>
       <Sidebar>
         <SidebarHeader>
-          <div className="flex items-center gap-2 p-2">
+          <Link href="/dashboard" className="flex items-center gap-2 p-2">
             <Logo className="w-8 h-8 text-primary" />
             <div className="flex flex-col">
               <h2 className="text-lg font-bold font-headline">Arogya AI</h2>
             </div>
-          </div>
+          </Link>
         </SidebarHeader>
         <SidebarContent>
           <SidebarNav />

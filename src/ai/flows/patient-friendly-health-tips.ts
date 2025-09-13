@@ -1,52 +1,39 @@
 'use server';
 /**
- * @fileOverview Provides patient-friendly health tips and summaries of medical information.
+ * @fileOverview Provides patient-friendly health tips.
  *
- * - getPatientFriendlyHealthTips - A function that processes medical information and returns simplified summaries and health tips.
- * - PatientFriendlyHealthTipsInput - The input type for the getPatientFriendlyHealthTips function.
+ * - getPatientFriendlyHealthTips - A function that returns general health tips.
  * - PatientFriendlyHealthTipsOutput - The return type for the getPatientFriendlyHealthTips function.
  */
 
 import {ai} from '@/ai/genkit';
 import {z} from 'genkit';
 
-const PatientFriendlyHealthTipsInputSchema = z.object({
-  medicalInformation: z.string().describe('Complex medical information that needs to be simplified.'),
-});
-export type PatientFriendlyHealthTipsInput = z.infer<typeof PatientFriendlyHealthTipsInputSchema>;
-
 const PatientFriendlyHealthTipsOutputSchema = z.object({
-  summary: z.string().describe('A simplified summary of the medical information.'),
-  healthTips: z.string().describe('Patient-friendly health tips based on the medical information.'),
+  healthTips: z.array(z.string()).describe('A list of patient-friendly health tips.'),
 });
 export type PatientFriendlyHealthTipsOutput = z.infer<typeof PatientFriendlyHealthTipsOutputSchema>;
 
-export async function getPatientFriendlyHealthTips(input: PatientFriendlyHealthTipsInput): Promise<PatientFriendlyHealthTipsOutput> {
-  return patientFriendlyHealthTipsFlow(input);
+export async function getPatientFriendlyHealthTips(): Promise<PatientFriendlyHealthTipsOutput> {
+  return patientFriendlyHealthTipsFlow();
 }
 
 const prompt = ai.definePrompt({
   name: 'patientFriendlyHealthTipsPrompt',
-  input: {schema: PatientFriendlyHealthTipsInputSchema},
   output: {schema: PatientFriendlyHealthTipsOutputSchema},
-  prompt: `You are a helpful AI assistant that simplifies complex medical information and provides patient-friendly health tips.
+  prompt: `You are a helpful AI assistant that provides general, patient-friendly health tips.
 
-  Summarize the following medical information in a way that is easy for patients to understand. Then, provide some actionable health tips based on the information.
-
-  Medical Information: {{{medicalInformation}}}
-
-  Summary:
-  Health Tips: `,
+  Provide a list of 5 basic, actionable health tips for a healthy lifestyle. The tips should be easy to understand for everyone.
+  `,
 });
 
 const patientFriendlyHealthTipsFlow = ai.defineFlow(
   {
     name: 'patientFriendlyHealthTipsFlow',
-    inputSchema: PatientFriendlyHealthTipsInputSchema,
     outputSchema: PatientFriendlyHealthTipsOutputSchema,
   },
-  async input => {
-    const {output} = await prompt(input);
+  async () => {
+    const {output} = await prompt({});
     return output!;
   }
 );

@@ -4,31 +4,31 @@
     {
       "id": "hero-image-1",
       "description": "A friendly doctor smiling and looking at the camera.",
-      "imageUrl": "https://picsum.photos/seed/100/1200/800",
+      "imageUrl": "https://images.unsplash.com/photo-1559839734-2b71ea197ec2?q=80&w=1200&h=800&fit=crop",
       "imageHint": "doctor smiling"
     },
     {
       "id": "doctor-1",
       "description": "Avatar for Dr. Anjali Sharma",
-      "imageUrl": "https://picsum.photos/seed/201/200/200",
+      "imageUrl": "https://images.unsplash.com/photo-1582750421715-21d74b344738?q=80&w=200&h=200&fit=crop",
       "imageHint": "woman doctor"
     },
     {
       "id": "doctor-2",
       "description": "Avatar for Dr. Raj Patel",
-      "imageUrl": "https://picsum.photos/seed/202/200/200",
+      "imageUrl": "https://images.unsplash.com/photo-1622253692010-333f2da6031d?q=80&w=200&h=200&fit=crop",
       "imageHint": "man doctor"
     },
     {
       "id": "doctor-3",
       "description": "Avatar for Dr. Priya Singh",
-      "imageUrl": "https://picsum.photos/seed/203/200/200",
+      "imageUrl": "https://images.unsplash.com/photo-1537368910025-7003507965b6?q=80&w=200&h=200&fit=crop",
       "imageHint": "female doctor"
     },
     {
       "id": "doctor-4",
       "description": "Avatar for Dr. Sameer Khan",
-      "imageUrl": "https://picsum.photos/seed/204/200/200",
+      "imageUrl": "https://images.unsplash.com/photo-1651008373230-6143b448a356?q=80&w=200&h=200&fit=crop",
       "imageHint": "male doctor"
     }
   ]

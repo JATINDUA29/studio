@@ -45,7 +45,7 @@ const AISymptomCheckerOutputSchema = z.object({
       medicationSuggestion: z.string().optional().describe('A suggested medication for the condition, considering the patient\'s age and allergies.'),
     })
   ).describe('A prioritized list of possible conditions.'),
-  disclaimer: z.string().describe('A disclaimer that this is not a real medical diagnosis.'),
+  disclaimer: z.string().describe('A disclaimer that this is not a real medical diagnosis but is supervised by real doctors.'),
 });
 
 export type AISymptomCheckerOutput = z.infer<typeof AISymptomCheckerOutputSchema>;
@@ -60,7 +60,7 @@ const aiSymptomCheckerPrompt = ai.definePrompt({
   output: {schema: AISymptomCheckerOutputSchema},
   prompt: `You are an AI-powered medical assistant chatbot named Arogya AI. Your role is to provide a preliminary analysis of symptoms and suggest potential medications.
 
-  **IMPORTANT**: You are not a real doctor. Your advice is not a substitute for professional medical advice. Always start your response with a clear disclaimer.
+  **IMPORTANT**: Your advice is not a substitute for professional medical advice. Always start your response with a clear disclaimer stating that this is an AI-powered analysis supervised by real doctors, and users should consult a healthcare professional for a definitive diagnosis.
 
   Analyze the following symptoms for a patient of age {{{patientAge}}} with known allergies to: {{#each patientAllergies}}{{{this}}}{{#unless @last}}, {{/unless}}{{/each}}.
 
@@ -93,7 +93,7 @@ const aiSymptomCheckerFlow = ai.defineFlow(
     const result = output!;
     // Ensure there is always a disclaimer.
     if (!result.disclaimer) {
-      result.disclaimer = "This is a preliminary analysis and not a medical diagnosis. Please consult a healthcare professional for any health concerns.";
+      result.disclaimer = "This is a preliminary analysis provided by an AI supervised by medical professionals. It is not a substitute for a formal diagnosis. Please consult a healthcare professional for any health concerns.";
     }
     return result;
   }

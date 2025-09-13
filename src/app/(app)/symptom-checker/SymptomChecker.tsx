@@ -18,22 +18,33 @@ import Image from 'next/image';
 
 const formSchema = z.object({
   symptoms: z.string().min(10, 'Please describe your symptoms in at least 10 characters.'),
-  symptomImage: z.string().optional(),
+  symptomImage: z.instanceof(File).optional(),
 });
 
 type FormValues = z.infer<typeof formSchema>;
 
-type SymptomCheckerState = {
-  data: AISymptomCheckerOutput | null;
-  error: string | null;
-};
-
 async function checkSymptoms(
-  prevState: SymptomCheckerState,
+  prevState: { data: AISymptomCheckerOutput | null; error: string | null },
   formData: FormData
-): Promise<SymptomCheckerState> {
+): Promise<{ data: AISymptomCheckerOutput | null; error: string | null }> {
   const symptoms = formData.get('symptoms') as string;
-  const symptomImage = formData.get('symptomImage') as string | undefined;
+  const imageFile = formData.get('symptomImage') as File | null;
+  
+  let symptomImage: string | undefined = undefined;
+
+  if (imageFile && imageFile.size > 0) {
+    const buffer = await imageFile.arrayBuffer();
+    const base64 = Buffer.from(buffer).toString('base64');
+    symptomImage = `data:${imageFile.type};base64,${base64}`;
+  }
+
+  const validatedFields = formSchema.safeParse({ symptoms, symptomImage: imageFile ?? undefined });
+  if (!validatedFields.success) {
+    return {
+      data: null,
+      error: "Invalid data provided."
+    };
+  }
   
   try {
     const result = await aiSymptomChecker({ symptoms, symptomImage });
@@ -63,41 +74,29 @@ export function SymptomChecker() {
     resolver: zodResolver(formSchema),
     defaultValues: {
       symptoms: '',
-      symptomImage: '',
     },
   });
   
   const handleImageChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     const file = event.target.files?.[0];
     if (file) {
+      form.setValue('symptomImage', file);
       const reader = new FileReader();
       reader.onloadend = () => {
-        const dataUri = reader.result as string;
-        form.setValue('symptomImage', dataUri);
-        setImagePreview(dataUri);
+        setImagePreview(reader.result as string);
       };
       reader.readAsDataURL(file);
     }
   };
 
   const removeImage = () => {
-    form.setValue('symptomImage', '');
+    form.setValue('symptomImage', undefined);
     setImagePreview(null);
-    // Reset file input
-    const fileInput = document.getElementById('symptomImage') as HTMLInputElement;
+    const fileInput = document.getElementById('symptom-image-input') as HTMLInputElement;
     if (fileInput) {
       fileInput.value = '';
     }
   }
-  
-  const onSubmit = (data: FormValues) => {
-    const formData = new FormData();
-    formData.append('symptoms', data.symptoms);
-    if (data.symptomImage) {
-      formData.append('symptomImage', data.symptomImage);
-    }
-    formAction(formData);
-  };
   
   const handleSymptomClick = (symptom: string) => {
     const currentSymptoms = form.getValues('symptoms');
@@ -120,7 +119,7 @@ export function SymptomChecker() {
   return (
     <div className="space-y-6">
       <Form {...form}>
-        <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-4">
+        <form action={formAction} className="space-y-4">
            <div className="grid md:grid-cols-2 gap-6">
              <FormField
               control={form.control}
@@ -137,24 +136,30 @@ export function SymptomChecker() {
             />
              <FormItem>
                 <FormLabel>Upload Image (Optional)</FormLabel>
-                <FormControl>
-                    <div className="relative border-2 border-dashed border-muted-foreground/30 rounded-lg p-4 text-center h-full flex flex-col justify-center items-center">
-                    {imagePreview ? (
-                        <div className="relative w-full h-40">
-                             <Image src={imagePreview} alt="Symptom preview" fill className="object-contain rounded-md" />
-                             <Button variant="destructive" size="icon" className="absolute top-2 right-2 h-6 w-6" onClick={removeImage}>
-                                <X className="h-4 w-4"/>
-                            </Button>
-                        </div>
-                    ) : (
-                        <div className="space-y-2">
-                             <ImageIcon className="mx-auto h-12 w-12 text-muted-foreground" />
-                            <p className="text-sm text-muted-foreground">Drag & drop or click to upload an image of your symptom.</p>
-                             <Input id="symptomImage" type="file" className="absolute inset-0 w-full h-full opacity-0 cursor-pointer" onChange={handleImageChange} accept="image/*"/>
-                        </div>
+                 <FormField
+                    control={form.control}
+                    name="symptomImage"
+                    render={() => (
+                      <FormControl>
+                          <div className="relative border-2 border-dashed border-muted-foreground/30 rounded-lg p-4 text-center h-full flex flex-col justify-center items-center">
+                          {imagePreview ? (
+                              <div className="relative w-full h-40">
+                                  <Image src={imagePreview} alt="Symptom preview" fill className="object-contain rounded-md" />
+                                  <Button variant="destructive" size="icon" className="absolute top-2 right-2 h-6 w-6" onClick={removeImage}>
+                                      <X className="h-4 w-4"/>
+                                  </Button>
+                              </div>
+                          ) : (
+                              <div className="space-y-2">
+                                  <ImageIcon className="mx-auto h-12 w-12 text-muted-foreground" />
+                                  <p className="text-sm text-muted-foreground">Drag & drop or click to upload an image of your symptom.</p>
+                                  <Input id="symptom-image-input" name="symptomImage" type="file" className="absolute inset-0 w-full h-full opacity-0 cursor-pointer" onChange={handleImageChange} accept="image/*"/>
+                              </div>
+                          )}
+                          </div>
+                      </FormControl>
                     )}
-                    </div>
-                </FormControl>
+                  />
                 <FormMessage />
             </FormItem>
            </div>
@@ -202,28 +207,23 @@ export function SymptomChecker() {
                 This is a preliminary analysis and not a medical diagnosis. Please consult a healthcare professional.
               </AlertDescription>
             </Alert>
-
-          {state.data.conditions.map((item, index) => (
-            <Card key={index}>
-              <CardContent className="pt-6">
-                <div className="flex justify-between items-start">
-                    <div>
-                        <p className="font-semibold">{item.condition}</p>
-                        <Badge variant={getSeverityVariant(item.severity)} className="capitalize mt-1">
-                            {item.severity} Severity
-                        </Badge>
-                    </div>
-                    <div className="text-right">
-                        <p className="font-bold text-lg">{(item.confidence * 100).toFixed(0)}%</p>
-                        <p className="text-sm text-muted-foreground">Confidence</p>
-                    </div>
+          <Card>
+            <CardContent className="pt-6 space-y-4">
+              {state.data.conditions.map((item, index) => (
+                <div key={index} className="space-y-2">
+                  <div className="flex justify-between items-center">
+                    <p className="font-semibold">{item.condition}</p>
+                    <Badge variant={getSeverityVariant(item.severity)}>{item.severity}</Badge>
+                  </div>
+                  <div className="flex items-center gap-2">
+                    <span className="text-sm text-muted-foreground w-24">Confidence:</span>
+                    <Progress value={item.confidence * 100} className="w-full" />
+                     <span className="text-sm font-medium w-12 text-right">{Math.round(item.confidence * 100)}%</span>
+                  </div>
                 </div>
-                 <div className="mt-4">
-                    <Progress value={item.confidence * 100} />
-                 </div>
-              </CardContent>
-            </Card>
-          ))}
+              ))}
+            </CardContent>
+          </Card>
         </div>
       )}
     </div>

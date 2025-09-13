@@ -30,7 +30,6 @@ const features = [
 ];
 
 export default function Home() {
-  const heroImage = PlaceHolderImages.find(p => p.id === 'hero-image-1');
   return (
     <div className="flex flex-col min-h-screen">
       <header className="container mx-auto px-4 sm:px-6 lg:px-8 py-4 flex justify-between items-center">
@@ -68,18 +67,16 @@ export default function Home() {
                 </Button>
               </div>
             </div>
-            <div className="relative h-64 md:h-full min-h-[300px] md:min-h-[400px]">
-              {heroImage && (
-                <Image
-                  src={heroImage.imageUrl}
-                  alt={heroImage.description}
-                  fill
-                  className="object-cover rounded-2xl shadow-2xl"
-                  sizes="(max-width: 768px) 100vw, 50vw"
-                  priority
-                  data-ai-hint={heroImage.imageHint}
-                />
-              )}
+            <div className="aspect-video w-full max-w-lg mx-auto">
+              <iframe
+                className="w-full h-full rounded-2xl shadow-2xl"
+                src="https://www.youtube.com/embed/gOql28T3JaE?si=B5p_vC_uLhYqWz-I&amp;controls=0&amp;start=3"
+                title="YouTube video player"
+                frameBorder="0"
+                allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+                referrerPolicy="strict-origin-when-cross-origin"
+                allowFullScreen
+              ></iframe>
             </div>
           </div>
         </section>

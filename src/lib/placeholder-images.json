@@ -1,3 +1,35 @@
+
 {
-  "placeholderImages": []
+  "placeholderImages": [
+    {
+      "id": "hero-image-1",
+      "description": "A friendly doctor smiling and looking at the camera.",
+      "imageUrl": "https://picsum.photos/seed/100/1200/800",
+      "imageHint": "doctor smiling"
+    },
+    {
+      "id": "doctor-1",
+      "description": "Avatar for Dr. Anjali Sharma",
+      "imageUrl": "https://picsum.photos/seed/201/200/200",
+      "imageHint": "woman doctor"
+    },
+    {
+      "id": "doctor-2",
+      "description": "Avatar for Dr. Raj Patel",
+      "imageUrl": "https://picsum.photos/seed/202/200/200",
+      "imageHint": "man doctor"
+    },
+    {
+      "id": "doctor-3",
+      "description": "Avatar for Dr. Priya Singh",
+      "imageUrl": "https://picsum.photos/seed/203/200/200",
+      "imageHint": "female doctor"
+    },
+    {
+      "id": "doctor-4",
+      "description": "Avatar for Dr. Sameer Khan",
+      "imageUrl": "https://picsum.photos/seed/204/200/200",
+      "imageHint": "male doctor"
+    }
+  ]
 }

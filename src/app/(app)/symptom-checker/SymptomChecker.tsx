@@ -200,7 +200,7 @@ export function SymptomChecker() {
               <AlertTitle>Disclaimer</AlertTitle>
               <AlertDescription>
                 This is a preliminary analysis and not a medical diagnosis. Please consult a healthcare professional.
-              </Aler_tDescription>
+              </AlertDescription>
             </Alert>
 
           {state.data.conditions.map((item, index) => (
